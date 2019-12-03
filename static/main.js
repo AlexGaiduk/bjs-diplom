@@ -49,3 +49,68 @@ function getStocks(callback) {
         callback(err, data);  
     })
 }
+
+function main () {
+    const Ivan = new Profile({
+                username: 'ivan',
+                name: { firstName: 'Ivan', lastName: 'Chernyshev' },
+                password: 'ivanspass',
+            });
+
+    const Maria = new Profile({
+                username: 'maria',
+                name: { firstName: 'Maria', lastName: 'Ivanova' },
+                password: 'mariaspass',
+            });
+
+    Ivan.createUser((err, data) => {
+        if (err) {
+            console.log(`regitration error ${ivan.createUser}`); // text
+        } else {
+            console.log(`user ${ivan.createUser} created`); // text
+
+            Ivan.performLogin((err, data) => {
+                if (err) {
+                    console.log(`error with log-in ${ivan.performLogin}`);
+                } else {
+                    console.log(`successful log-in ${ivan.performLogin}`);
+
+                        Ivan.addMoney({ currency: 'RUB', amount: 500000 }, (err, data) => {
+                            if (err) {
+                                console.log(`Error during adding money to ${ivan.username}`);
+                            } else {
+                                console.log(`Added ${amount} ${currency} to ${ivan.username}`);
+
+                                ivan.convertMoney({ fromCurrency: 'RUB', targetCurrency: 'NTC', targetAmount: targetAmount}, (err, data) => {
+                                    if (err) {
+                                        console.log('exchange error');
+                                    } else {
+                                        console.log(`successful exchange ${currency} to NTC`);
+
+                                        maria.createUser((err, data) => {
+                                            if (err) {
+                                                console.log(`regitration error ${maria.createUser}`); 
+                                            } else {
+                                                console.log(`user ${maria.createUser} created `); 
+
+                                                ivan.transferMoney({ to: maria.username, amount: targetAmount}, (err, data) => {
+                                                    if (err) {
+                                                        console.log(`transfer error`);
+                                                    } else {
+                                                        console.log(`successful transfer to ${maria.username}`);
+                                                    }
+                                                })    
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                }
+            })
+        }
+    })
+} // main
+
+
+main();
